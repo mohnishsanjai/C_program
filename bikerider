@@ -1,47 +1,46 @@
 #include <stdio.h>
 
-int calculateRefueling(int maxFuel, int mileage, int distance)
- {
-    int requiredDistance = 1000;
-    int fuelNeeded = requiredDistance / mileage;
-    
-    if (fuelNeeded > maxFuel && distance == 0) 
-{
-        return -1; // Cannot reach the destination as refueling is impossible
-    }
-    
-    int refuels = 0;
-    int currentFuel = maxFuel;
+int main() {
+    // Declare variables to store input values
+    int N, M, D;
 
-    while (requiredDistance > 0) {
-        int maxDistanceWithCurrentFuel = currentFuel * mileage;
-        if (maxDistanceWithCurrentFuel >= requiredDistance)
- {
+    // Read the input values
+    scanf("%d %d %d", &N, &M, &D);
+
+    // Calculate the maximum distance John can travel with a full tank
+    int max_distance = N * M;
+
+    // If the maximum distance is less than the distance between stations, print -1
+    if (max_distance < D) {
+        printf("-1\n");
+        return 0;
+    }
+
+    // We need to cover a total distance of 1000 km
+    int total_distance = 1000;
+    
+    // Initialize variables to track the current position and number of refuels
+    int current_position = 0;
+    int refuels = 0;
+    
+    // While we haven't covered the entire distance
+    while (current_position + max_distance < total_distance) {
+        // If the bike can't make it to the next station, we need a refuel
+        refuels++;
+        current_position += max_distance;
+        
+        // If after refueling, the bike can still reach the destination
+        if (current_position + max_distance >= total_distance) {
             break;
         }
-        
-        requiredDistance -= maxDistanceWithCurrentFuel;
-        refuels++;
-        currentFuel = maxFuel;
     }
-    
-    return refuels;
-}
 
-int main() {
-    int maxFuel, mileage, distance;
-    
-    printf("Enter max fuel capacity, mileage and distance between fuel stations: ");
-    scanf("%d %d %d", &maxFuel, &mileage, &distance);
-    
-    int result = calculateRefueling(maxFuel, mileage, distance);
-    if (result == -1) 
-{
+    // Check if we are able to reach the destination from the current position
+    if (current_position + max_distance >= total_distance) {
+        printf("%d\n", refuels);
+    } else {
         printf("-1\n");
-    } else
- {
-        printf("%d\n", result);
     }
 
-    return 0;
+    return 0;
 }
