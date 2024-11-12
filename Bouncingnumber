@@ -1,40 +1,48 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int isBouncy(int num)
- {
-    int increasing = 1, decreasing = 1;
-    int lastDigit = num % 10;
-    num /= 10;
-
-    while (num > 0)
- {
-        int currentDigit = num % 10;
-        if (currentDigit < lastDigit)
- {
-            increasing = 0;
+// Function to check if a number is bouncy
+bool is_bouncy(int n) {
+    // Convert the number to a string for easy digit access
+    int prev_digit = n % 10; // Start with the last digit
+    n /= 10;
+    bool increasing = false;
+    bool decreasing = false;
+    
+    while (n > 0) {
+        int current_digit = n % 10;
+        
+        // Compare current and previous digits
+        if (current_digit < prev_digit) {
+            decreasing = true;
+        } else if (current_digit > prev_digit) {
+            increasing = true;
         }
-        if (currentDigit > lastDigit)
- {
-            decreasing = 0;
+        
+        // If both increasing and decreasing transitions are found, it's bouncy
+        if (increasing && decreasing) {
+            return true;
         }
-        lastDigit = currentDigit;
-        num /= 10;
+        
+        prev_digit = current_digit; // Update prev_digit for next iteration
+        n /= 10; // Move to the next digit
     }
     
-    return !(increasing || decreasing); 
+    // If only increasing or only decreasing (or no transitions), it's not bouncy
+    return false;
 }
 
-int main()
- {
-    int num;
-    printf("Enter a number: ");
-    scanf("%d", &num);
+int main() {
+    int n;
+    // Read the input number
+    scanf("%d", &n);
     
-    if (isBouncy(num))
- {
-        printf("True\n");  
-        printf("False\n"); 
+    // Output the result
+    if (is_bouncy(n)) {
+        printf("True\n");
+    } else {
+        printf("False\n");
     }
 
-    return 0;
+    return 0;
 }
