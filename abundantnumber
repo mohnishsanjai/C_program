@@ -1,31 +1,28 @@
 #include <stdio.h>
 
-int isAbundant(int num)
- {
+// Function to calculate the sum of proper divisors
+int sum_of_divisors(int num) {
     int sum = 0;
-    for (int i = 1; i <= num / 2; i++) 
-{
-        if (num % i == 0)
- {
+    for (int i = 1; i <= num / 2; i++) {
+        if (num % i == 0) {
             sum += i;
         }
     }
-    return sum > num;
+    return sum;
 }
 
-int main()
- {
+int main() {
     int num;
-    printf("Enter a number: ");
+    // Read the number from standard input
     scanf("%d", &num);
-    
-    if (isAbundant(num))
- {
-        printf("True\n");  
-    } else
- {
-        printf("False\n"); 
+
+    // Check if the number is abundant
+    if (sum_of_divisors(num) > num) {
+        printf("True\n");
+    } else {
+        printf("False\n");
     }
 
-    return 0;
+    return 0;
 }
+
