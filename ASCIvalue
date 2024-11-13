@@ -1,37 +1,36 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() 
-{
-    char str[100];
-    int frequency[256] = {0};
-    
-    printf("Enter a string: ");
-    scanf("%s", str);
-    
-    for (int i = 0; i < strlen(str); i++)
- {
-        frequency[(int)str[i]]++;
+#define ASCII_SIZE 256
+
+int main() {
+    char str[1000];
+    int freq[ASCII_SIZE] = {0};
+    int max_odd_count = 0;
+    char max_odd_char = '\0';
+
+    // Read the input string from standard input
+    fgets(str, sizeof(str), stdin);
+
+    // Calculate the frequency of each character
+    for (int i = 0; i < strlen(str); i++) {
+        freq[(int)str[i]]++;
     }
-    
-    int maxAscii = -1;
-    for (int i = 0; i < 256; i++)
- {
-        if (frequency[i] % 2 == 1 && frequency[i] > 0)
- {
-            if (maxAscii == -1 || i > maxAscii)
- {
-                maxAscii = i;
-            }
+
+    // Find the character with the maximum odd frequency
+    for (int i = 0; i < ASCII_SIZE; i++) {
+        if (freq[i] % 2 == 1 && freq[i] > max_odd_count) {
+            max_odd_count = freq[i];
+            max_odd_char = (char)i;
         }
     }
-    
-    if (maxAscii != -1)
- {
-        printf("%d\n", maxAscii); // ASCII value of max occurring character
+
+    // Print the ASCII value of the character
+    if (max_odd_char != '\0') {
+        printf("%d\n", (int)max_odd_char);
     } else {
-        printf("-1\n"); // No character with odd frequency
+        printf("No character occurs an odd number of times.\n");
     }
-    
-    return 0;
+
+    return 0;
 }
